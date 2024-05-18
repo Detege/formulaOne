@@ -1,3 +1,0 @@
-Add meeting selector to update the drivers of the given event
-List the drivers with their photo, number and team colour
-Make the drivers selectable and show info about them
