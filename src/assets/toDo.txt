@@ -1,0 +1,8 @@
+Add meeting selector to update the drivers of the given event
+CHECK: List the drivers with their photo, number and team colour
+Make the drivers selectable and show info about them
+
+Feature request:
+Comparativa de tandas para los libres
+Indicador de investigación o sanciones
+Posición teórica en caso de parada, con o sin safety Comparativa
