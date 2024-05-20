@@ -1,9 +1,11 @@
 import "./App.css";
 import DriverListItem from "./components/DriverListItem";
+import StintList from "./components/StintList";
 import useDrivers from "./hooks/useDrivers";
 
 function App() {
   const { data, error, isLoading } = useDrivers();
+
   if (error) return <p>error</p>;
   if (isLoading) return <p>loading</p>;
   return (
@@ -17,7 +19,10 @@ function App() {
             ))}
           </ul>
         </div>
-        <div className="col-span-3">01</div>
+        <div className="col-span-3">
+         
+          <StintList />
+        </div>
         <div className="col-span-2">01</div>
       </div>
     </>
