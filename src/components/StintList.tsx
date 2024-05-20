@@ -1,16 +1,21 @@
+import { Driver } from '../hooks/useDrivers';
 import useStints from '../hooks/useStints'
 import StintsListItem from './StintsListItem';
 
+interface Props {
+  selectedDriver:Driver | null;
+}
 
-const StintList = () => {
-    const { data, error, isLoading } = useStints();
+
+const StintList = ({ selectedDriver }:Props) => {
+    const { data, error, isLoading } = useStints(selectedDriver);
 
     if (error) return <p>error</p>;
   if (isLoading) return <p>loading</p>;
   return (
     <ul>
-      {data.map((stint) => (
-        <StintsListItem key={stint.stint_number} stint={stint} />
+      {data.map((stint, index) => (
+        <StintsListItem key={index} stint={stint} />
       ))}
     </ul>
   )
