@@ -3,10 +3,13 @@ import "./App.css";
 import StintList from "./components/StintList";
 import { Driver } from "./hooks/useDrivers";
 import DriverList from "./components/DriverList";
+import SessionSelector, { defaultSession } from "./components/SessionSelector";
+import { Session } from "./hooks/useSessions";
 
 function App() {
   
   const [selectedDriver, setSelectedDriver] = useState<Driver | null>(null);
+  const [selectedSession, setSelectedSession] = useState<Session["session_key"]>(defaultSession);
 
   
   return (
@@ -17,9 +20,10 @@ function App() {
           <DriverList onSelectDriver={(driver) => setSelectedDriver(driver)} />
         </div>
         <div className="col-span-3">
-          <StintList selectedDriver={selectedDriver} />
+          <SessionSelector onSelectSession={(sesh) => setSelectedSession(sesh)} />
+          <StintList selectedDriver={selectedDriver} selectedSession={selectedSession} />
         </div>
-        <div className="col-span-2">01</div>
+        <div className="col-span-2">Race info</div>
       </div>
     </>
   );
