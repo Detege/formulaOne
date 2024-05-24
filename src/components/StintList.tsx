@@ -1,16 +1,16 @@
+import { SessionQuery } from '../App';
 import { Driver } from '../hooks/useDrivers';
-import { Session } from '../hooks/useSessions';
 import useStints from '../hooks/useStints'
 import StintsListItem from './StintsListItem';
 
 interface Props {
-  selectedDriver:Driver | null;
-  selectedSession:Session["session_key"];
+  selectedDriver: Driver | null;
+  sessionQuery: SessionQuery;
 }
 
 
-const StintList = ({ selectedDriver, selectedSession }:Props) => {
-    const { data, error, isLoading } = useStints(selectedDriver, selectedSession);
+const StintList = ({ selectedDriver, sessionQuery }:Props) => {
+    const { data, error, isLoading } = useStints(selectedDriver, sessionQuery);
 
     if (error) return <p>error</p>;
   if (isLoading) return <p>loading</p>;

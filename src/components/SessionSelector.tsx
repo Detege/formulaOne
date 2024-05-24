@@ -1,13 +1,15 @@
 import { ChangeEvent } from "react";
 import useSessions, { Session } from "../hooks/useSessions";
+import { SessionQuery } from "../App";
 
 interface Props {
-  onSelectSession: (sesh: Session["session_key"]) => void;
+  onSelectSession: (session: Session["session_key"]) => void;
+  sessionQuery: SessionQuery;
 }
-export const defaultSession: Session["session_key"] = "latest" ;
+const defaultSession: Session["session_key"] = "latest" ;
 
-const SessionSelector = ({ onSelectSession }: Props) => {
-  const { data } = useSessions();
+const SessionSelector = ({ onSelectSession, sessionQuery }: Props) => {
+  const { data } = useSessions(sessionQuery);
 
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -29,9 +31,9 @@ const SessionSelector = ({ onSelectSession }: Props) => {
 
       <select name="sessions" id="sessionSelect" onChange={handleChange}>
         <option value={data.length}>Current/Last</option>
-        {data.map((sesh, index) => (
-          <option value={index} key={sesh.session_key}>
-            {sesh.session_name}
+        {data.map((session, index) => (
+          <option value={index} key={session.session_key}>
+            {session.session_name}
           </option>
         ))}
       </select>

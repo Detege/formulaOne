@@ -1,3 +1,4 @@
+import { SessionQuery } from "../App";
 import useData from "./useData";
 
 export interface Driver {
@@ -8,6 +9,11 @@ export interface Driver {
   team_colour: string;
 }
 
-const useDrivers = () => useData<Driver>("/drivers?session_key=9502");
+const useDrivers = (sessionQuery: SessionQuery) => useData<Driver>("/drivers",
+{ params: {
+  session_key: sessionQuery?.session,
+}},
+[sessionQuery?.session,]
+);
 
 export default useDrivers;

@@ -1,6 +1,6 @@
+import { SessionQuery } from "../App";
 import useData from "./useData";
 import { Driver } from "./useDrivers";
-import { Session } from "./useSessions";
 
 export interface Stint {
   compound: string;
@@ -10,14 +10,15 @@ export interface Stint {
   session_key: number;
 }
 
-const useStints = (selectedDriver: Driver | null, selectedSession: Session["session_key"]) =>
+const useStints = (selectedDriver: Driver | null, sessionQuery: SessionQuery) =>
   useData<Stint>(
     "/stints",
     { params: { 
-        session_key: selectedSession,
-        driver_number: selectedDriver?.driver_number,
+      meeting_key: sessionQuery.gp?.meeting_key,
+      session_key: sessionQuery?.session,
+      driver_number: selectedDriver?.driver_number,
      } },
-    [selectedSession, selectedDriver?.driver_number]
+    [sessionQuery, selectedDriver?.driver_number]
   );
 
 export default useStints;

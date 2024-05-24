@@ -1,3 +1,4 @@
+import { SessionQuery } from "../App";
 import useData from "./useData";
 
 export interface Session {
@@ -5,7 +6,12 @@ export interface Session {
     session_key: number | string;
 }
 
-const useSessions = () =>
-  useData<Session>("/sessions?country_name=Belgium&year=2023");
+const useSessions = (sessionQuery: SessionQuery) =>
+  useData<Session>("/sessions",
+    { params: {
+      meeting_key: sessionQuery.gp?.meeting_key,
+    }},
+    [sessionQuery.gp?.meeting_key]
+  );
 
 export default useSessions;
