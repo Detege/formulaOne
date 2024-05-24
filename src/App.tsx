@@ -53,10 +53,11 @@ function App() {
             onSelectYear={(year) => setSessionQuery({ ...sessionQuery, year })}
             toggleState={toggleState}
           />
+          { selectedDriver &&
           <StintList
             selectedDriver={selectedDriver}
             sessionQuery={sessionQuery}
-          />
+          /> }
         </div>
         <div className="col-span-2">Race info</div>
       </div>
