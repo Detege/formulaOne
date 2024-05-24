@@ -19,6 +19,20 @@ function App() {
     {} as SessionQuery
   );
 
+  const liveSession: SessionQuery = {
+    session: "latest",
+    gp: {
+      year: 2024,
+      circuit_short_name: "latest",
+      meeting_key: "latest",
+    },
+    year: 2024,
+  };
+
+  const toggleState = () => {
+    setSessionQuery(liveSession);
+  };
+
   return (
     <>
       <div className="grid grid-cols-6 gap-4">
@@ -37,6 +51,7 @@ function App() {
             }
             onSelectGp={(gp) => setSessionQuery({ ...sessionQuery, gp })}
             onSelectYear={(year) => setSessionQuery({ ...sessionQuery, year })}
+            toggleState={toggleState}
           />
           <StintList
             selectedDriver={selectedDriver}
