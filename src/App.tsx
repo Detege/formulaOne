@@ -3,9 +3,12 @@ import "./App.css";
 import StintList from "./components/StintList";
 import { Driver } from "./hooks/useDrivers";
 import DriverList from "./components/DriverList";
-import FilterMenu from "./components/FilterMenu";
 import { Session } from "./hooks/useSessions";
 import { Gp } from "./hooks/useGrandPrix";
+import YearSelector from "./components/YearSelector";
+import GpSelector from "./components/GpSelector";
+import SessionSelector from "./components/SessionSelector";
+import LiveButton from "./components/LiveButton";
 
 export interface SessionQuery {
   session: Session["session_key"];
@@ -44,20 +47,31 @@ function App() {
           />
         </div>
         <div className="col-span-3">
-          <FilterMenu
-            sessionQuery={sessionQuery}
-            onSelectSession={(session) =>
-              setSessionQuery({ ...sessionQuery, session })
-            }
-            onSelectGp={(gp) => setSessionQuery({ ...sessionQuery, gp })}
-            onSelectYear={(year) => setSessionQuery({ ...sessionQuery, year })}
-            toggleState={toggleState}
-          />
-          { selectedDriver &&
-          <StintList
-            selectedDriver={selectedDriver}
-            sessionQuery={sessionQuery}
-          /> }
+          <div className="ml-10 flex items-baseline space-x-4">
+            <YearSelector
+              onSelectYear={(year) =>
+                setSessionQuery({ ...sessionQuery, year })
+              }
+            />
+            <GpSelector
+              sessionQuery={sessionQuery}
+              onSelectGp={(gp) => setSessionQuery({ ...sessionQuery, gp })}
+            />
+            <SessionSelector
+              sessionQuery={sessionQuery}
+              onSelectSession={(session) =>
+                setSessionQuery({ ...sessionQuery, session })
+              }
+            />
+            <LiveButton toggleState={toggleState} />
+          </div>
+          
+          {selectedDriver && (
+            <StintList
+              selectedDriver={selectedDriver}
+              sessionQuery={sessionQuery}
+            />
+          )}
         </div>
         <div className="col-span-2">Race info</div>
       </div>

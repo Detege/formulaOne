@@ -19,7 +19,7 @@ const GpSelector = ({ onSelectGp, sessionQuery }:Props) => {
 
     return (
         <>
-          <label htmlFor="grandPrixSelect">Grand Prix: </label>
+          <label htmlFor="grandPrixSelect">GP: </label>
     
           <select name="grandPrix" id="grandPrixSelect" onChange={handleChange}>
             {data.map((gp, index) => (
