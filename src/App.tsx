@@ -1,9 +1,9 @@
 import { useState } from "react";
 import "./App.css";
 import StintList from "./components/StintList";
-import { Driver } from "./hooks/useDrivers";
+import  { Driver } from "./hooks/useDrivers";
 import DriverList from "./components/DriverList";
-import { Session } from "./hooks/useSessions";
+import  { Session } from "./hooks/useSessions";
 import { Gp } from "./hooks/useGrandPrix";
 import YearSelector from "./components/YearSelector";
 import GpSelector from "./components/GpSelector";
@@ -15,26 +15,26 @@ export interface SessionQuery {
   gp: Gp;
   year: number;
 }
+const d = new Date();
+let thisYear = d.getFullYear();
+const liveSession: SessionQuery = {
+  session: "latest",
+  gp: {
+    year: thisYear,
+    circuit_short_name: "latest",
+    meeting_key: "latest",
+  },
+  year: thisYear,
+};
+
+const firstDriver: Driver = {
+  driver_number: 1
+};
+
 
 function App() {
-  const [selectedDriver, setSelectedDriver] = useState<Driver | null>(null);
-  const [sessionQuery, setSessionQuery] = useState<SessionQuery>(
-    {} as SessionQuery
-  );
-
-  const liveSession: SessionQuery = {
-    session: "latest",
-    gp: {
-      year: 2024,
-      circuit_short_name: "latest",
-      meeting_key: "latest",
-    },
-    year: 2024,
-  };
-
-  const toggleState = () => {
-    setSessionQuery(liveSession);
-  };
+  const [selectedDriver, setSelectedDriver] = useState<Driver>( firstDriver );
+  const [sessionQuery, setSessionQuery] = useState<SessionQuery>( liveSession );
 
   return (
     <>
@@ -63,9 +63,9 @@ function App() {
                 setSessionQuery({ ...sessionQuery, session })
               }
             />
-            <LiveButton toggleState={toggleState} />
+            <LiveButton toggleState={() => setSessionQuery(liveSession)} />
           </div>
-          
+
           {selectedDriver && (
             <StintList
               selectedDriver={selectedDriver}

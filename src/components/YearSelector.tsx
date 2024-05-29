@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
-import useGrandPrix, { Gp } from "../hooks/useGrandPrix";
 import { SessionQuery } from "../App";
+import useSessions, { Session } from "../hooks/useSessions";
 
 interface Props {
     onSelectYear: (year: number) => void;
@@ -8,8 +8,9 @@ interface Props {
 
 const YearSelector = ({ onSelectYear }: Props) => {
 
-  const { data } = useGrandPrix({} as SessionQuery);
-  const uniqueYears = Array.from(new Set(data.map((gp: Gp) => gp.year)));
+  const { data } = useSessions({} as SessionQuery);
+  const uniqueDates = data.map((date: Session) => new Date(date.date_start));
+  const uniqueYears = Array.from(new Set(uniqueDates.map((year) => year.getFullYear() )));
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedIndex = Number(event.target.value);
     const selectedYear = uniqueYears[selectedIndex];

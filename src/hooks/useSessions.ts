@@ -4,6 +4,7 @@ import useData from "./useData";
 export interface Session {
     session_name: string;
     session_key: number | string;
+    date_start: string;
 }
 
 const useSessions = (sessionQuery: SessionQuery) =>
