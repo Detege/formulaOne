@@ -1,26 +1,24 @@
-import { SessionQuery } from '../App';
-import { Driver } from '../hooks/useDrivers';
-import useStints from '../hooks/useStints'
-import StintsListItem from './StintsListItem';
+import { Session } from "../hooks/useSessions";
+import useStints, { Stint } from "../hooks/useStints";
+import StintsListItem from "./StintsListItem";
 
 interface Props {
-  selectedDriver: Driver | null;
-  sessionQuery: SessionQuery;
+  stints: Stint[];
+  filteredSessions: Session[];
+  selectedDriverNumber: number;
 }
 
+const StintList = ({ filteredSessions }: Props) => {
+  const latestSession = filteredSessions[0];
+  const { data } = useStints(latestSession);
 
-const StintList = ({ selectedDriver, sessionQuery }:Props) => {
-    const { data, error, isLoading } = useStints(selectedDriver, sessionQuery);
-
-    if (error) return <p>error</p>;
-  if (isLoading) return <p>loading</p>;
   return (
     <ul>
       {data.map((stint, index) => (
         <StintsListItem key={index} stint={stint} />
       ))}
     </ul>
-  )
-}
+  );
+};
 
-export default StintList
+export default StintList;

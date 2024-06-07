@@ -1,18 +1,20 @@
-import { SessionQuery } from "../App";
 import useData from "./useData";
-
 export interface Session {
-    session_name: string;
-    session_key: number | string;
-    date_start: string;
+  session_key: number;
+  year: number;
+  meeting_key: number;
+  session_type: string;
 }
 
-const useSessions = (sessionQuery: SessionQuery) =>
-  useData<Session>("/sessions",
-    { params: {
-      meeting_key: sessionQuery.gp?.meeting_key,
-    }},
-    [sessionQuery.gp?.meeting_key]
+const useSessions = (grandPrixKey?: number) =>
+  useData<Session>(
+    "/sessions",
+    {
+      params: {
+        meeting_key: grandPrixKey,
+      },
+    },
+    [grandPrixKey]
   );
 
 export default useSessions;

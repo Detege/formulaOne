@@ -1,35 +1,46 @@
 import { ChangeEvent } from "react";
 import useSessions, { Session } from "../hooks/useSessions";
-import { SessionQuery } from "../App";
-
 interface Props {
-  onSelectSession: (session: Session["session_key"]) => void;
-  sessionQuery: SessionQuery;
+  selectedGrandPrix?: number;
+  onSelectSession: (session: Session) => void;
+  selectedSession: number;
+  toggleState: () => void;
 }
-const SessionSelector = ({ onSelectSession, sessionQuery }: Props) => {
-  const { data } = useSessions(sessionQuery);
+const SessionSelector = ({
+  selectedGrandPrix,
+  onSelectSession,
+  selectedSession,
+  toggleState,
+}: Props) => {
+  const { data: sessions } = useSessions(selectedGrandPrix);
+  const uniqueSessionKeys = sessions.map((sesh: Session) => sesh.session_key);
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedIndex = Number(event.target.value);
-
-    const selectedSession = data[selectedIndex].session_key;
-    if (selectedSession) {
-      onSelectSession(selectedSession);
+    const selection = sessions[selectedIndex];
+    if (selection) {
+      onSelectSession(selection);
+      toggleState();
     }
   };
 
   return (
-    <>
-      <label htmlFor="sessionSelect">Session: </label>
-
-      <select name="sessions" id="sessionSelect" onChange={handleChange}>
-        {data.map((session, index) => (
-          <option value={index} key={session.session_key}>
-            {session.session_name}
-          </option>
-        ))}
-      </select>
-    </>
+    <label className="block mb-4">
+      <div className="flex flex-col items-start">
+        <span>Session</span>
+        <select
+          name="Session"
+          value={uniqueSessionKeys.indexOf(selectedSession)}
+          onChange={handleChange}
+        >
+          {sessions.map((session, index) => (
+            <option value={index} key={index}>
+              {session.session_type}
+            </option>
+          ))}
+        </select>
+      </div>
+    </label>
   );
 };
 

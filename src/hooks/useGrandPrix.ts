@@ -1,17 +1,19 @@
-import { SessionQuery } from "../App";
 import useData from "./useData";
-
-export interface Gp {
-  year: number;
+export interface GrandPrix {
+  meeting_key: number;
   circuit_short_name: string;
-  meeting_key: number | string;
+  year: number;
 }
 
-const useGrandPrix = (sessionQuery: SessionQuery) => useData<Gp>("/meetings",
-  { params: {
-    year: sessionQuery?.year
-  }},
-  [sessionQuery?.year]
-);
+const useGrandPrix = (year?: Number) =>
+  useData<GrandPrix>(
+    "/meetings",
+    {
+      params: {
+        year: year,
+      },
+    },
+    [year]
+  );
 
 export default useGrandPrix;

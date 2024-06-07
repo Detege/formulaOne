@@ -1,23 +1,18 @@
-import { SessionQuery } from "../App";
 import DriverListItem from "../components/DriverListItem";
-import useDrivers, { Driver } from "../hooks/useDrivers";
+import { Driver } from "../hooks/useDrivers";
 
 interface Props {
-    onSelectDriver: (driver: Driver) => void;
-    sessionQuery: SessionQuery;
-  }
+  drivers: Driver[];
+  onSelectDriver: (driver: number) => void;
+}
 
-const DriverList = ({ onSelectDriver, sessionQuery }: Props) => {
-  const { data, error, isLoading } = useDrivers(sessionQuery);
-
-  if (error) return <p>error</p>;
-  if (isLoading) return <p>loading</p>;
+const DriverList = ({ drivers, onSelectDriver }: Props) => {
 
   return (
     <ul>
-      {data.map((driver, index) => (
-        <div onClick={() => onSelectDriver(driver)} key={index}>
-            <DriverListItem driver={driver} />
+      {drivers.map((driver, index) => (
+        <div onClick={() => onSelectDriver(driver.driver_number)} key={index}>
+          <DriverListItem driver={driver} />
         </div>
       ))}
     </ul>

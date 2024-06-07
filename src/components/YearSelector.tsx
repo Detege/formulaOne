@@ -1,36 +1,46 @@
 import { ChangeEvent } from "react";
-import { SessionQuery } from "../App";
-import useSessions, { Session } from "../hooks/useSessions";
+import useGrandPrix, { GrandPrix } from "../hooks/useGrandPrix";
 
 interface Props {
-    onSelectYear: (year: number) => void;
+  onSelectYear: (year: number) => void;
+  selectedYear: number;
+  toggleState: () => void;
 }
 
-const YearSelector = ({ onSelectYear }: Props) => {
+const YearSelector = ({ onSelectYear, selectedYear, toggleState }: Props) => {
+  const { data } = useGrandPrix();
+  
+  const uniqueDates = data.map((date: GrandPrix) => date.year);
+  const uniqueYears = Array.from(new Set(uniqueDates.map((year) => year)));
 
-  const { data } = useSessions({} as SessionQuery);
-  const uniqueDates = data.map((date: Session) => new Date(date.date_start));
-  const uniqueYears = Array.from(new Set(uniqueDates.map((year) => year.getFullYear() )));
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedIndex = Number(event.target.value);
-    const selectedYear = uniqueYears[selectedIndex];
-    if (selectedYear) {
-        onSelectYear(selectedYear);
-    }
+    const selection = uniqueYears[selectedIndex];
+    onSelectYear(selection);
+    toggleState();
   };
 
-  return (
-    <>
-      <label htmlFor="yearSelect">Year: </label>
+  if (data.length === 0) {
+    return null;
+  }
 
-      <select name="year" id="yearSelect" onChange={handleChange}>
-        {uniqueYears.map((year, index) => (
-          <option value={index} key={index}>
-            {year}
-          </option>
-        ))}
-      </select>
-    </>
+  return (
+    <label className="block mb-4">
+      <div className="flex flex-col items-start">
+        <span>Year</span>
+        <select
+          name="year"
+          value={uniqueYears.indexOf(selectedYear)}
+          onChange={handleChange}
+        >
+          {uniqueYears.map((year, index) => (
+            <option value={index} key={index}>
+              {year}
+            </option>
+          ))}
+        </select>
+      </div>
+    </label>
   );
 };
 
