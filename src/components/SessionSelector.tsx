@@ -1,16 +1,17 @@
 import { ChangeEvent } from "react";
 import useSessions, { Session } from "../hooks/useSessions";
+import { MenuState } from "../App";
 interface Props {
   selectedGrandPrix?: number;
   onSelectSession: (session: Session) => void;
+  menuState: MenuState;
   selectedSession: number;
-  toggleState: () => void;
 }
 const SessionSelector = ({
   selectedGrandPrix,
   onSelectSession,
+  menuState,
   selectedSession,
-  toggleState,
 }: Props) => {
   const { data: sessions } = useSessions(selectedGrandPrix);
   const uniqueSessionKeys = sessions.map((sesh: Session) => sesh.session_key);
@@ -20,7 +21,6 @@ const SessionSelector = ({
     const selection = sessions[selectedIndex];
     if (selection) {
       onSelectSession(selection);
-      toggleState();
     }
   };
 
@@ -30,9 +30,12 @@ const SessionSelector = ({
         <span>Session</span>
         <select
           name="Session"
-          value={uniqueSessionKeys.indexOf(selectedSession)}
+          value={menuState.session === false ? 'default' : uniqueSessionKeys.indexOf(selectedSession)}
           onChange={handleChange}
         >
+          {menuState.session === false && (
+            <option value={'default'}>Select Session</option>
+          )}
           {sessions.map((session, index) => (
             <option value={index} key={index}>
               {session.session_type}

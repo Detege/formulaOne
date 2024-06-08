@@ -7,16 +7,14 @@ interface Props {
   selectedGrandPrix: number;
   onSelectGp: (grandPrix: GrandPrix) => void;
   menuState: MenuState;
-  toggleState: () => void;
 }
 
-const GpSelector = ({ selectedYear, onSelectGp, menuState, selectedGrandPrix, toggleState }: Props) => {
+const GpSelector = ({ selectedYear, onSelectGp, menuState, selectedGrandPrix }: Props) => {
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedIndex = Number(event.target.value);
     const selection = grandPrix[selectedIndex];
     if (selection) {
       onSelectGp(selection);
-      toggleState();
     }
   };
   
@@ -38,18 +36,19 @@ const GpSelector = ({ selectedYear, onSelectGp, menuState, selectedGrandPrix, to
         <span>Grand Prix</span>
         <select
           name="grandPrix"
-          value={uniqueMeetingKeys.indexOf(selectedGrandPrix)}
+          value={menuState.grandPrix === false ? 'default' : uniqueMeetingKeys.indexOf(selectedGrandPrix)}
           onChange={handleChange}
         >
-          {menuState ? (
-            grandPrix.map((grandPrix, index) => (
-              <option value={index} key={index}>
-                {grandPrix.circuit_short_name}
-              </option>
-            ))
-          ) : (
-            <option>Select Grand Prix</option>
+          {menuState.grandPrix === false && (
+            <option value={'default'}>Select Grand Prix</option>
           )}
+          {
+          grandPrix.map((grandPrix, index) => (
+            <option value={index} key={index}>
+              {grandPrix.circuit_short_name}
+            </option>
+          ))
+         }
         </select>
       </div>
     </label>

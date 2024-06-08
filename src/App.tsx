@@ -19,21 +19,28 @@ export interface MenuState {
 function App() {
   // const [selectedDriverNumber, setSelectedDriverNumber] = useState<number>();
   const { data: latestSessions } = useLatestSessions();
-  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
-  const [selectedGrandPrix, setSelectedGrandPrix] = useState<number>({} as number);
-  const [selectedSession, setSelectedSession] =
-  useState<number>({} as number);
+  const [selectedYear, setSelectedYear] = useState<number>(
+    new Date().getFullYear()
+  );
+  const [selectedGrandPrix, setSelectedGrandPrix] = useState<number>(
+    {} as number
+  );
+  const [selectedSession, setSelectedSession] = useState<number>({} as number);
   const [menuState, setMenuState] = useState<MenuState>({
     latest: true,
     grandPrix: true,
     session: true,
   });
-  
+
   // const { data: stints } = useStints(currentSession, 1);
   // const { data: drivers } = useDrivers();
-  
+
   const setCurrent = () => {
-    if (latestSessions && latestSessions.length > 0 && menuState.latest === true ) {
+    if (
+      latestSessions &&
+      latestSessions.length > 0 &&
+      menuState.latest === true
+    ) {
       const latestSession = latestSessions[0];
       setSelectedYear(latestSession.year);
       setSelectedGrandPrix(latestSession.meeting_key);
@@ -73,7 +80,7 @@ function App() {
       setMenuState({ ...menuState, session: true });
       setSelectedSession(selection.session_key);
     } else if (selection.hasOwnProperty("circuit_short_name")) {
-      setMenuState({ ...menuState, grandPrix: true });
+      setMenuState({ ...menuState, grandPrix: true, session: false });
       setSelectedGrandPrix(selection.meeting_key);
     }
   };
@@ -94,7 +101,12 @@ function App() {
               onSelectYear={(year) => setSelectedYear(year)}
               selectedYear={selectedYear}
               toggleState={() =>
-                setMenuState({ ...menuState, latest: false, grandPrix: false, session: false })
+                setMenuState({
+                  ...menuState,
+                  latest: false,
+                  grandPrix: false,
+                  session: false,
+                })
               }
             />
             <GpSelector
@@ -102,25 +114,22 @@ function App() {
               onSelectGp={(grandPrix) => selector(grandPrix)}
               menuState={menuState}
               selectedGrandPrix={selectedGrandPrix}
-              toggleState={() =>
-                setMenuState({ ...menuState, latest: false, grandPrix: true, session: false })
-              }
             />
-            <SessionSelector
-              selectedGrandPrix={selectedGrandPrix}
-              onSelectSession={(session) => selector(session)}
-              selectedSession={selectedSession}
-              toggleState={() =>
-                setMenuState({ ...menuState, latest: false, grandPrix: true, session: true })
-              }
-            />
+            {menuState.grandPrix && (
+              <SessionSelector
+                selectedGrandPrix={selectedGrandPrix}
+                onSelectSession={(session) => selector(session)}
+                menuState={menuState}
+                selectedSession={selectedSession}
+              />
+            )}
             <LiveButton
               toggleState={() =>
                 setMenuState({
                   ...menuState,
                   latest: true,
-                  grandPrix: false,
-                  session: false,
+                  grandPrix: true,
+                  session: true,
                 })
               }
             />
