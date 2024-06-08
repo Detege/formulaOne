@@ -1,12 +1,18 @@
+import { MenuState } from "../App";
 import DriverListItem from "../components/DriverListItem";
-import { Driver } from "../hooks/useDrivers";
-
+import useDrivers from "../hooks/useDrivers";
 interface Props {
-  drivers: Driver[];
   onSelectDriver: (driver: number) => void;
+  menuState: MenuState;
+  selectedSession: number;
 }
 
-const DriverList = ({ drivers, onSelectDriver }: Props) => {
+const DriverList = ({ onSelectDriver, menuState, selectedSession }: Props) => {
+  const { data: drivers } = useDrivers(selectedSession);
+
+  if (menuState.session === false) {
+    return <p className="text-left">Select a Grand Prix<br/>and a Session</p>;
+  }
 
   return (
     <ul>

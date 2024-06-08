@@ -1,9 +1,8 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import useLatestSessions from "./hooks/useLatestSessions";
-// import useDrivers from "./hooks/useDrivers";
 import StintList from "./components/StintList";
-// import DriverList from "./components/DriverList";
+import DriverList from "./components/DriverList";
 import YearSelector from "./components/YearSelector";
 import GpSelector from "./components/GpSelector";
 import SessionSelector from "./components/SessionSelector";
@@ -16,12 +15,12 @@ export interface MenuState {
 }
 
 function App() {
-  const [selectedDriver, setSelectedDriver] = useState<number>(1);
   const { data: latestSessions } = useLatestSessions();
   const [selectedYear, setSelectedYear] = useState<number>(
     new Date().getFullYear()
   );
 
+  const [selectedDriver, setSelectedDriver] = useState<number>(1);
   const [selectedGrandPrix, setSelectedGrandPrix] = useState<number>(
     {} as number
   );
@@ -31,8 +30,6 @@ function App() {
     grandPrix: true,
     session: true,
   });
-
-  // const { data: drivers } = useDrivers();
 
   const setCurrent = () => {
     if (
@@ -44,13 +41,6 @@ function App() {
       setSelectedYear(latestSession.year);
       setSelectedGrandPrix(latestSession.meeting_key);
       setSelectedSession(latestSession.session_key);
-
-      // if (stints.length > 0) {
-      //   const latestStint = stints.find(stint => stint.session_key === latestSession.session_key);
-      //   // if (latestStint) {
-      //   //   setSelectedDriver(latestStint.driver_number);
-      //   // }
-      // }
     }
   };
 
@@ -59,20 +49,7 @@ function App() {
   }, [
     latestSessions,
     menuState.latest,
-    // stints
   ]);
-
-  // const filteredSessions = sessions.filter(session => {
-  //   const stint = stints.find( stint =>
-  //     stint.session_key === session.session_key && stint.driver_number === selectedDriver
-  //   );
-  //   return (
-  //     stint &&
-  //     session.year === selectedYear &&
-  //     session.meeting_key === selectedGrandPrix &&
-  //     session.session_key === selectedSession
-  //   );
-  // });
 
   const selector = (selection: any) => {
     if (selection.hasOwnProperty("session_key")) {
@@ -92,12 +69,13 @@ function App() {
   return (
     <>
       <div className="grid grid-cols-6 gap-8 w-full">
-        <div className="flex items-start col-span-1">
+        <div className="flex flex-col items-start col-span-1">
           <h2 className="text-xl font-bold pb-4">Drivers</h2>
-          {/* <DriverList
-            drivers={drivers}
+          <DriverList
             onSelectDriver={(driver) => setSelectedDriver(driver)}
-          /> */}
+            menuState={menuState}
+            selectedSession={selectedSession}
+          />
         </div>
         <div className="col-span-3">
           <div className="flex items-end gap-4 mb-4">
