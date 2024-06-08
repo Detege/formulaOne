@@ -1,21 +1,22 @@
 import useData from "./useData";
-import { Session } from "./useSessions";
-
 export interface Stint {
   compound: string;
   driver_number: number;
+  lap_start: number;
+  lap_end: number;
   tyre_age_at_start: number;
   stint_number: number;
   session_key: number;
 }
 
-const useStints = (latestSession: Session ) =>
+const useStints = (selectedSession: number, selectedDriver: number ) =>
   useData<Stint>(
     "/stints",
     { params: { 
-      session_key: latestSession.session_key
+      session_key: selectedSession,
+      driver_number: selectedDriver,
      } },
-    [latestSession]
+    [selectedSession, selectedDriver]
   );
 
 export default useStints;

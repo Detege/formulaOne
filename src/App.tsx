@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
 import "./App.css";
-// import StintList from "./components/StintList";
-// import useDrivers from "./hooks/useDrivers";
-// import DriverList from "./components/DriverList";
+import { useEffect, useState } from "react";
 import useLatestSessions from "./hooks/useLatestSessions";
+// import useDrivers from "./hooks/useDrivers";
+import StintList from "./components/StintList";
+// import DriverList from "./components/DriverList";
 import YearSelector from "./components/YearSelector";
 import GpSelector from "./components/GpSelector";
 import SessionSelector from "./components/SessionSelector";
 import LiveButton from "./components/LiveButton";
-// import useStints from "./hooks/useStints";
 
 export interface MenuState {
   latest: Boolean;
@@ -17,11 +16,13 @@ export interface MenuState {
 }
 
 function App() {
-  // const [selectedDriverNumber, setSelectedDriverNumber] = useState<number>();
+  const [selectedDriver, setSelectedDriver] = useState<number>(1);
   const { data: latestSessions } = useLatestSessions();
   const [selectedYear, setSelectedYear] = useState<number>(
     new Date().getFullYear()
   );
+ 
+
   const [selectedGrandPrix, setSelectedGrandPrix] = useState<number>(
     {} as number
   );
@@ -32,7 +33,6 @@ function App() {
     session: true,
   });
 
-  // const { data: stints } = useStints(currentSession, 1);
   // const { data: drivers } = useDrivers();
 
   const setCurrent = () => {
@@ -49,7 +49,7 @@ function App() {
       // if (stints.length > 0) {
       //   const latestStint = stints.find(stint => stint.session_key === latestSession.session_key);
       //   // if (latestStint) {
-      //   //   setSelectedDriverNumber(latestStint.driver_number);
+      //   //   setSelectedDriver(latestStint.driver_number);
       //   // }
       // }
     }
@@ -65,7 +65,7 @@ function App() {
 
   // const filteredSessions = sessions.filter(session => {
   //   const stint = stints.find( stint =>
-  //     stint.session_key === session.session_key && stint.driver_number === selectedDriverNumber
+  //     stint.session_key === session.session_key && stint.driver_number === selectedDriver
   //   );
   //   return (
   //     stint &&
@@ -77,10 +77,10 @@ function App() {
 
   const selector = (selection: any) => {
     if (selection.hasOwnProperty("session_key")) {
-      setMenuState({ ...menuState, session: true });
+      setMenuState({ ...menuState, session: true, latest: false });
       setSelectedSession(selection.session_key);
     } else if (selection.hasOwnProperty("circuit_short_name")) {
-      setMenuState({ ...menuState, grandPrix: true, session: false });
+      setMenuState({ ...menuState, grandPrix: true, session: false, latest: false });
       setSelectedGrandPrix(selection.meeting_key);
     }
   };
@@ -92,7 +92,7 @@ function App() {
           <h1 className="text-xl font-bold pb-4">Drivers</h1>
           {/* <DriverList
             drivers={drivers}
-            onSelectDriver={(driverNumber) => setSelectedDriverNumber(driverNumber)}
+            onSelectDriver={(driver) => setSelectedDriver(driver)}
           /> */}
         </div>
         <div className="col-span-3">
@@ -134,14 +134,10 @@ function App() {
               }
             />
           </div>
-
-          {/* {selectedDriverNumber && (
             <StintList
-            stints={stints}
-            filteredSessions={filteredSessions}
-            selectedDriverNumber={selectedDriverNumber}
+            selectedSession={selectedSession}
+            selectedDriver={selectedDriver}
             />
-          )} */}
         </div>
         <div className="col-span-2">Race info</div>
       </div>

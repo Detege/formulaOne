@@ -1,16 +1,13 @@
-import { Session } from "../hooks/useSessions";
-import useStints, { Stint } from "../hooks/useStints";
+import useStints from "../hooks/useStints";
 import StintsListItem from "./StintsListItem";
 
 interface Props {
-  stints: Stint[];
-  filteredSessions: Session[];
-  selectedDriverNumber: number;
+  selectedSession: number;
+  selectedDriver: number;
 }
 
-const StintList = ({ filteredSessions }: Props) => {
-  const latestSession = filteredSessions[0];
-  const { data } = useStints(latestSession);
+const StintList = ({ selectedSession, selectedDriver }: Props) => {
+  const { data } = useStints(selectedSession, selectedDriver);
 
   return (
     <ul>
