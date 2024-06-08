@@ -9,7 +9,7 @@ interface Props {
 
 const YearSelector = ({ onSelectYear, selectedYear, toggleState }: Props) => {
   const { data } = useGrandPrix();
-  
+
   const uniqueDates = data.map((date: GrandPrix) => date.year);
   const uniqueYears = Array.from(new Set(uniqueDates.map((year) => year)));
 
@@ -25,10 +25,11 @@ const YearSelector = ({ onSelectYear, selectedYear, toggleState }: Props) => {
   }
 
   return (
-    <label className="block mb-4">
+    <label className="block">
       <div className="flex flex-col items-start">
         <span>Year</span>
         <select
+          className="w-full"
           name="year"
           value={uniqueYears.indexOf(selectedYear)}
           onChange={handleChange}

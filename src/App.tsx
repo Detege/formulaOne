@@ -21,7 +21,6 @@ function App() {
   const [selectedYear, setSelectedYear] = useState<number>(
     new Date().getFullYear()
   );
- 
 
   const [selectedGrandPrix, setSelectedGrandPrix] = useState<number>(
     {} as number
@@ -80,66 +79,77 @@ function App() {
       setMenuState({ ...menuState, session: true, latest: false });
       setSelectedSession(selection.session_key);
     } else if (selection.hasOwnProperty("circuit_short_name")) {
-      setMenuState({ ...menuState, grandPrix: true, session: false, latest: false });
+      setMenuState({
+        ...menuState,
+        grandPrix: true,
+        session: false,
+        latest: false,
+      });
       setSelectedGrandPrix(selection.meeting_key);
     }
   };
 
   return (
     <>
-      <div className="grid grid-cols-6 gap-4">
-        <div className="col-span-1">
-          <h1 className="text-xl font-bold pb-4">Drivers</h1>
+      <div className="grid grid-cols-6 gap-8 w-full">
+        <div className="flex items-start col-span-1">
+          <h2 className="text-xl font-bold pb-4">Drivers</h2>
           {/* <DriverList
             drivers={drivers}
             onSelectDriver={(driver) => setSelectedDriver(driver)}
           /> */}
         </div>
         <div className="col-span-3">
-          <div className="ml-10 flex items-baseline space-x-4">
-            <YearSelector
-              onSelectYear={(year) => setSelectedYear(year)}
-              selectedYear={selectedYear}
-              toggleState={() =>
-                setMenuState({
-                  ...menuState,
-                  latest: false,
-                  grandPrix: false,
-                  session: false,
-                })
-              }
-            />
-            <GpSelector
-              selectedYear={selectedYear}
-              onSelectGp={(grandPrix) => selector(grandPrix)}
-              menuState={menuState}
-              selectedGrandPrix={selectedGrandPrix}
-            />
-            {menuState.grandPrix && (
-              <SessionSelector
-                selectedGrandPrix={selectedGrandPrix}
-                onSelectSession={(session) => selector(session)}
-                menuState={menuState}
-                selectedSession={selectedSession}
+          <div className="flex items-end gap-4 mb-4">
+            <div className="columns-3 w-4/5">
+              <YearSelector
+                onSelectYear={(year) => setSelectedYear(year)}
+                selectedYear={selectedYear}
+                toggleState={() =>
+                  setMenuState({
+                    ...menuState,
+                    latest: false,
+                    grandPrix: false,
+                    session: false,
+                  })
+                }
               />
-            )}
-            <LiveButton
-              toggleState={() =>
-                setMenuState({
-                  ...menuState,
-                  latest: true,
-                  grandPrix: true,
-                  session: true,
-                })
-              }
-            />
+              <GpSelector
+                selectedYear={selectedYear}
+                onSelectGp={(grandPrix) => selector(grandPrix)}
+                menuState={menuState}
+                selectedGrandPrix={selectedGrandPrix}
+              />
+              {menuState.grandPrix && (
+                <SessionSelector
+                  selectedGrandPrix={selectedGrandPrix}
+                  onSelectSession={(session) => selector(session)}
+                  menuState={menuState}
+                  selectedSession={selectedSession}
+                />
+              )}
+            </div>
+            <div className="w-1/5 flex justify-end">
+              <LiveButton
+                toggleState={() =>
+                  setMenuState({
+                    ...menuState,
+                    latest: true,
+                    grandPrix: true,
+                    session: true,
+                  })
+                }
+              />
+            </div>
           </div>
-            <StintList
+          <StintList
             selectedSession={selectedSession}
             selectedDriver={selectedDriver}
-            />
+          />
         </div>
-        <div className="col-span-2">Race info</div>
+        <div className="flex items-start col-span-2">
+          <h2 className="text-xl font-bold pb-4">Race info</h2>
+        </div>
       </div>
     </>
   );

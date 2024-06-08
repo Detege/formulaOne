@@ -25,16 +25,21 @@ const SessionSelector = ({
   };
 
   return (
-    <label className="block mb-4">
+    <label className="block">
       <div className="flex flex-col items-start">
         <span>Session</span>
         <select
+          className="w-full"
           name="Session"
-          value={menuState.session === false ? 'default' : uniqueSessionKeys.indexOf(selectedSession)}
+          value={
+            menuState.session === false
+              ? "default"
+              : uniqueSessionKeys.indexOf(selectedSession)
+          }
           onChange={handleChange}
         >
           {menuState.session === false && (
-            <option value={'default'}>Select Session</option>
+            <option value={"default"}>Select Session</option>
           )}
           {sessions.map((session, index) => (
             <option value={index} key={index}>
