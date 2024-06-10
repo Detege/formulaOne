@@ -7,6 +7,7 @@ import YearSelector from "./components/YearSelector";
 import GpSelector from "./components/GpSelector";
 import SessionSelector from "./components/SessionSelector";
 import LiveButton from "./components/LiveButton";
+import { Driver } from "./hooks/useDrivers";
 
 export interface MenuState {
   latest: Boolean;
@@ -20,7 +21,7 @@ function App() {
     new Date().getFullYear()
   );
 
-  const [selectedDriver, setSelectedDriver] = useState<number>(1);
+  const [selectedDriver, setSelectedDriver] = useState<Driver>({} as Driver);
   const [selectedGrandPrix, setSelectedGrandPrix] = useState<number>(
     {} as number
   );
@@ -75,6 +76,7 @@ function App() {
             onSelectDriver={(driver) => setSelectedDriver(driver)}
             menuState={menuState}
             selectedSession={selectedSession}
+            selectedDriver={selectedDriver}
           />
         </div>
         <div className="col-span-3">

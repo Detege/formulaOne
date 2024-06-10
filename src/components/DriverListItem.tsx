@@ -2,13 +2,15 @@ import { Driver } from "../hooks/useDrivers";
 
 interface Props {
   driver: Driver;
+  selectedDriver: Driver;
 }
 
-const DriverListItem = ({ driver }: Props) => {
+const DriverListItem = ({ driver, selectedDriver }: Props) => {
   return (
     <li className="flex justify-between py-1.5">
       <div
-        className="flex min-w-0 gap-x-2 border-2 rounded-r-xl rounded-l-3xl w-full"
+        className={`flex min-w-0 gap-x-2 rounded-r-xl rounded-l-3xl w-full border-2
+        ${selectedDriver.driver_number === driver.driver_number ? 'border-r-[5px]' : 'opacity-60'} `}
         style={{ borderColor: "#" + driver.team_colour }}
       >
         <img
