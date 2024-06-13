@@ -2,8 +2,8 @@ import useData from "./useData";
 
 export interface Driver {
   driver_number: number;
-  first_name: string
-  last_name: string
+  first_name: string;
+  last_name: string;
   headshot_url: string;
   name_acronym: string;
   session_key: number;

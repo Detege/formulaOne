@@ -8,6 +8,8 @@ import GpSelector from "./components/GpSelector";
 import SessionSelector from "./components/SessionSelector";
 import LiveButton from "./components/LiveButton";
 import { Driver } from "./hooks/useDrivers";
+import EventList from "./components/EventList";
+import RaceInfo from "./components/RaceInfo";
 
 export interface MenuState {
   latest: Boolean;
@@ -47,10 +49,7 @@ function App() {
 
   useEffect(() => {
     setCurrent();
-  }, [
-    latestSessions,
-    menuState.latest,
-  ]);
+  }, [latestSessions, menuState.latest]);
 
   const selector = (selection: any) => {
     if (selection.hasOwnProperty("session_key")) {
@@ -126,9 +125,17 @@ function App() {
             selectedSession={selectedSession}
             selectedDriver={selectedDriver}
           />
+          <EventList
+            selectedSession={selectedSession}
+            selectedDriver={selectedDriver}
+          />
         </div>
-        <div className="flex items-start col-span-2">
+        <div className="flex flex-col items-start col-span-2">
           <h2 className="text-xl font-bold pb-4">Race info</h2>
+          <RaceInfo
+            selectedSession={selectedSession}
+            selectedDriver={selectedDriver}
+          />
         </div>
       </div>
     </>
