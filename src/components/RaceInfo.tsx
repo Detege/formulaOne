@@ -1,23 +1,26 @@
-import { Driver } from "../hooks/useDrivers";
 import usePolling from "../hooks/usePolling";
+import RaceUpdateListItem from "./RaceUpdateListItem";
 
 interface Props {
   selectedSession: number;
-  selectedDriver: Driver;
 }
 
-const RaceInfo = ({ selectedSession, selectedDriver }: Props) => {
-  const { raceData } = usePolling(selectedSession, selectedDriver, 3000);
-  const selectedRaceUpdates =
-    raceData &&
-    raceData.filter((update) => update.session_key === selectedSession);
-  return (
-    <ul>
-      {selectedRaceUpdates?.map((update, index) => (
-        <li key={index}>{update.message}</li>
-      ))}
-    </ul>
-  );
-};
+const RaceInfo = ({ selectedSession }: Props) => {
+    const { raceData } = usePolling(selectedSession, 3000);
+    
+    const selectedRaceUpdates =
+      raceData &&
+      raceData
+        .filter((update) => update.session_key === selectedSession)
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // Using getTime() for numeric comparison
+  
+    return (
+      <ul>
+        {selectedRaceUpdates?.map((update, index) => (
+          <RaceUpdateListItem key={index} update={update} />
+        ))}
+      </ul>
+    );
+  };
 
 export default RaceInfo;

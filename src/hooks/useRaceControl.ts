@@ -1,5 +1,4 @@
 import useData from "./useData";
-import { Driver } from "./useDrivers";
 
 export interface RaceEvent {
   category: string;
@@ -7,15 +6,15 @@ export interface RaceEvent {
   message: string;
   scope: string;
   session_key: number;
+  date: string;
 }
 
-const useRaceControl = (session: number, driver: Driver) =>
+const useRaceControl = (session: number) =>
   useData<RaceEvent>(
     "/race_control",
     {
       params: {
         session_key: session,
-        driver_number: driver.driver_number,
       },
     },
     [session]

@@ -12,9 +12,18 @@ const useData = <T>(endpoint: string, requestconfig?: AxiosRequestConfig, deps?:
 
     setLoading(true);
     apiClient
-      .get(endpoint, {signal: controller.signal, ...requestconfig})
+      .get(endpoint, { signal: controller.signal, ...requestconfig })
       .then((res) => {
-        setData(res.data);
+        const responseData = res.data;
+
+        // Check if response is an array of arrays and combine them
+        if (Array.isArray(responseData) && responseData.every(Array.isArray)) {
+          const combinedData = responseData.flat();
+          setData(combinedData);
+        } else {
+          setData(responseData);
+        }
+
         setLoading(false);
       })
       .catch((err) => {

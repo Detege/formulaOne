@@ -125,16 +125,11 @@ function App() {
             selectedSession={selectedSession}
             selectedDriver={selectedDriver}
           />
-          <EventList
-            selectedSession={selectedSession}
-            selectedDriver={selectedDriver}
-          />
         </div>
         <div className="flex flex-col items-start col-span-2">
           <h2 className="text-xl font-bold pb-4">Race info</h2>
           <RaceInfo
             selectedSession={selectedSession}
-            selectedDriver={selectedDriver}
           />
         </div>
       </div>
