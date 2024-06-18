@@ -8,7 +8,6 @@ import GpSelector from "./components/GpSelector";
 import SessionSelector from "./components/SessionSelector";
 import LiveButton from "./components/LiveButton";
 import { Driver } from "./hooks/useDrivers";
-import EventList from "./components/EventList";
 import RaceInfo from "./components/RaceInfo";
 
 export interface MenuState {
