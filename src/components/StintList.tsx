@@ -12,7 +12,7 @@ const StintList = ({ selectedSession, selectedDriver }: Props) => {
 
   return (
     <>
-      <h2 className="text-left mb-4 text-2xl font-bold">{selectedDriver.last_name || 'Select a driver'}</h2>
+      <h2 className="hidden lg:block text-left mb-4 text-2xl font-bold">{selectedDriver.last_name || 'Select a driver'}</h2>
       <ul>
         {data.map((stint, index) => (
           <StintsListItem key={index} stint={stint} />

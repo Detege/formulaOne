@@ -67,8 +67,8 @@ function App() {
 
   return (
     <>
-      <div className="grid grid-cols-6 gap-8 w-full">
-        <div className="flex flex-col items-start col-span-1">
+      <div className="grid lg:grid-cols-6 gap-8 w-full">
+        <div className="hidden lg:flex flex-col items-start lg:col-span-1">
           <h2 className="text-xl font-bold pb-4">Drivers</h2>
           <DriverList
             onSelectDriver={(driver) => setSelectedDriver(driver)}
@@ -77,9 +77,9 @@ function App() {
             selectedDriver={selectedDriver}
           />
         </div>
-        <div className="col-span-3">
+        <div className="lg:col-span-3">
           <div className="flex items-end gap-4 mb-4">
-            <div className="columns-3 w-4/5">
+            <div className="md:columns-3 md:w-4/5 w-3/5">
               <YearSelector
                 onSelectYear={(year) => setSelectedYear(year)}
                 selectedYear={selectedYear}
@@ -107,7 +107,7 @@ function App() {
                 />
               )}
             </div>
-            <div className="w-1/5 flex justify-end">
+            <div className="md:w-1/5 w-2/5 flex justify-end">
               <LiveButton
                 toggleState={() =>
                   setMenuState({
@@ -120,12 +120,20 @@ function App() {
               />
             </div>
           </div>
+          <div className="lg:hidden pb-4">
+          <DriverList
+            onSelectDriver={(driver) => setSelectedDriver(driver)}
+            menuState={menuState}
+            selectedSession={selectedSession}
+            selectedDriver={selectedDriver}
+          />
+          </div>
           <StintList
             selectedSession={selectedSession}
             selectedDriver={selectedDriver}
           />
         </div>
-        <div className="flex flex-col items-start col-span-2">
+        <div className="flex flex-col items-start lg:col-span-2">
           <h2 className="text-xl font-bold pb-4">Race info</h2>
           <RaceInfo
             selectedSession={selectedSession}
