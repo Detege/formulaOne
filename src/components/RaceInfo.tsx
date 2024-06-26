@@ -1,8 +1,8 @@
 import { useState } from "react";
-import usePolling from "../hooks/usePolling";
 import NextPrev from "./NextPrev";
 import RaceUpdateListItem from "./RaceUpdateListItem";
 import Loading from "./Loading";
+import useRaceControl from "../hooks/useRaceControl";
 
 interface Props {
   selectedSession: number;
@@ -14,7 +14,7 @@ export interface ItemsRange {
 }
 
 const RaceInfo = ({ selectedSession }: Props) => {
-  const { raceData } = usePolling(selectedSession, 3000);
+  const { data: RaceEvent } = useRaceControl(selectedSession);
   const [itemsRange, setItemsRange] = useState<ItemsRange>({
     start: 0,
     end: 10,
@@ -36,8 +36,8 @@ const RaceInfo = ({ selectedSession }: Props) => {
   };
 
   const selectedRaceUpdates =
-    raceData &&
-    raceData
+    RaceEvent &&
+    RaceEvent
       .filter((update) => update.session_key === selectedSession)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // Using getTime() for numeric comparison
 
