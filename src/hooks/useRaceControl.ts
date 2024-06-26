@@ -9,7 +9,7 @@ export interface RaceEvent {
   date: string;
 }
 
-const useRaceControl = (session: number) =>
+const useRaceControl = (session: number, trigger: number) =>
   useData<RaceEvent>(
     "/race_control",
     {
@@ -17,7 +17,7 @@ const useRaceControl = (session: number) =>
         session_key: session,
       },
     },
-    [session]
+    [session, trigger]
   );
 
 export default useRaceControl;
