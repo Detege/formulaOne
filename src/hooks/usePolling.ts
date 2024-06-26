@@ -2,15 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import useRaceControl, { RaceEvent } from "./useRaceControl";
 
 const usePolling = (session: number, interval: number = 3000) => {
-const [trigger, setTrigger] = useState(0); // Trigger signal
+  const [trigger, setTrigger] = useState(0); // Trigger signal
   const { data: updates } = useRaceControl(session, trigger);
   const [raceData, setRaceData] = useState<RaceEvent[] | null>(null);
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     const fetchData = () => {
-        setTrigger((prev) => prev + 1); // Increment trigger to re-fetch data
-      };
+      setTrigger((prev) => prev + 1); // Increment trigger to re-fetch data
+    };
 
     fetchData(); // Initial fetch
 
