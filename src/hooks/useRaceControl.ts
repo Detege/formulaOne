@@ -17,7 +17,8 @@ const useRaceControl = (session: number) =>
         session_key: session,
       },
     },
-    [session]
+    [session],
+    5000 // get this in the deps array??
   );
 
 export default useRaceControl;

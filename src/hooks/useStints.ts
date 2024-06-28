@@ -17,7 +17,8 @@ const useStints = (selectedSession: number, selectedDriver: Driver ) =>
       session_key: selectedSession,
       driver_number: selectedDriver.driver_number,
      } },
-    [selectedSession, selectedDriver]
+    [selectedSession, selectedDriver],
+    50000 
   );
 
 export default useStints;

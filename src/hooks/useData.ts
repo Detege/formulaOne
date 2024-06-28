@@ -5,7 +5,8 @@ import { AxiosRequestConfig, CanceledError } from "axios";
 const useData = <T>(
   endpoint: string,
   requestconfig?: AxiosRequestConfig,
-  deps?: any[]
+  deps?: any[],
+  interval?: number
 ) => {
   const [data, setData] = useState<T[]>([]);
   const [error, setError] = useState("");
@@ -51,7 +52,9 @@ const useData = <T>(
         clearInterval(pollingRef.current);
       }
 
-      pollingRef.current = setInterval(fetchData, 5000);
+      if (interval) {
+        pollingRef.current = setInterval(fetchData, interval);
+      }
     },
     deps ? [...deps] : []
   );

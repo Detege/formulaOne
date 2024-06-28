@@ -26,7 +26,7 @@ function App() {
   const [selectedGrandPrix, setSelectedGrandPrix] = useState<number>(
     {} as number
   );
-  const [selectedSession, setSelectedSession] = useState<number>({} as number);
+  const [selectedSession, setSelectedSession] = useState<number>(0);
   const [menuState, setMenuState] = useState<MenuState>({
     latest: true,
     grandPrix: true,
@@ -70,12 +70,14 @@ function App() {
       <div className="grid lg:grid-cols-6 gap-8 w-full">
         <div className="hidden lg:flex flex-col items-start lg:col-span-1">
           <h2 className="text-xl font-bold pb-4">Drivers</h2>
-          <DriverList
+          {selectedSession !== 0 && (
+            <DriverList
             onSelectDriver={(driver) => setSelectedDriver(driver)}
             menuState={menuState}
             selectedSession={selectedSession}
             selectedDriver={selectedDriver}
           />
+          )}
         </div>
         <div className="lg:col-span-3">
           <div className="flex items-end gap-4 mb-4">
