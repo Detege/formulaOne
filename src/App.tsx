@@ -9,6 +9,7 @@ import SessionSelector from "./components/SessionSelector";
 import LiveButton from "./components/LiveButton";
 import { Driver } from "./hooks/useDrivers";
 import RaceInfo from "./components/RaceInfo";
+import LapTimes from "./components/LapTimes";
 
 export interface MenuState {
   latest: Boolean;
@@ -130,6 +131,10 @@ function App() {
             selectedDriver={selectedDriver}
           />
           </div>
+          <LapTimes
+            selectedSession={selectedSession}
+            selectedDriver={selectedDriver}
+          />
           <StintList
             selectedSession={selectedSession}
             selectedDriver={selectedDriver}
